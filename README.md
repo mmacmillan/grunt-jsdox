@@ -201,7 +201,56 @@ grunt jsdox:generate
 
 
 
+#### Publishing to a git repo
+Before running the publish task, a git repository with a remote must already be configured; all this thing does it run git commands, specifically in
+the following order:
 
+1. git add .
+2. git commit -m <commit message>
+3. git push <remote> <branch>
+
+This example assumes your github/bitbucket/whatever wiki is located in a docs/markdown subfolder.  If a remote isn't configured already
+(run `git remote -v show` to see whats there), you need to configure one before continuing:
+
+```shell
+git remote add <name> <git repo url>
+
+ex:
+git remote add upstream https://github.com/yourname/yourrepo.wiki.git
+```
+
+**GruntFile**
+
+```js
+jsdox: {
+  generate: {
+    options: {
+      contentsTitle: 'My Project API Documentation',
+    },
+
+    src: ['lib/**/*.js'],
+    dest: 'docs/markdown'
+  },
+
+  publish: {
+    enabled: true,
+    path: '<%= jsdox.generate.dest %>',
+    message: 'Markdown Auto-Generated for version <%= pkg.version %>',
+    remoteName: 'upstream'
+  }
+}
+
+...
+
+//define a custom task to clean, generate, then publish
+grunt.registerTask('generate-docs', ['clean:docs', 'jsdox:generate', 'jsdox:publish']);
+```
+
+**Run the task**
+
+```shell
+grunt generate-docs
+```
 
 
 ## Contributing
