@@ -21,7 +21,7 @@ grunt.loadNpmTasks('grunt-jsdox');
 
 ### Overview
 
-The `grunt-jsdox` plugin will recursively generate documentation for all the `src` paths defined, using the [jsDox](http://jsdox.org) module, outputting to the configured `dest`.
+The `grunt-jsdox` plugin will recursively generate markdown documentation for all the `src` paths defined using the [jsDox](http://jsdox.org) module, outputting to the configured `dest`.
 
 If `contentsEnabled` is _true_, a table of contents will also be generated with links to all of the files documented, sorted and grouped by the containing folder.
 
@@ -31,6 +31,7 @@ documentation for a project, for ex. to your github/bitbucket wiki, as part of t
 In your project's Gruntfile, add a section named `jsdox` to the data object passed into `grunt.initConfig()`.
 
 
+**Full Configuration** (defines each option)
 ```js
 grunt.initConfig({
   jsdox: {
@@ -59,11 +60,29 @@ grunt.initConfig({
 });
 ```
 
+**Minimal Configuration** (falls back on defaults)
+
+```js
+grunt.initConfig({
+  jsdox: {
+    generate: {
+      options: {
+        contentsTitle: 'My Project Documentation',
+      },
+
+      src: ['path/to/code'],
+      dest: 'path/to/output'
+    }
+  }
+});
+```
+
+
 ### Options
 
 #### Generation Task Options
 
-** contentsEnabled **
+**contentsEnabled**
 
 Type: `Boolean`
 Default value: `true`
@@ -71,7 +90,7 @@ Default value: `true`
 When _true_, the table of contents file (readme.md by default) is generated at the `dest` root
 
 
-** contentsTitle **
+**contentsTitle**
 
 Type: `String`
 Default value: `Documentation`
@@ -115,7 +134,7 @@ The destination path for the generated documentation
 
 #### Publish Task Options
 
-** enabled **
+**enabled**
 
 Type: `Boolean`
 Default value: `false`
@@ -123,28 +142,28 @@ Default value: `false`
 When _true_, publishing to a remote git repo is enabled
 
 
-** path **
+**path**
 
 Type: `String`
 
 The path from the `cwd` to the git repository that will be published
 
 
-** message **
+**message**
 
 Type: `String`
 
 The commit message used when `git commit` is called
 
 
-** remoteName **
+**remoteName**
 
 Type: `String`
 
 The remote name of the git repository we are publishing to.  This would be one of the names displayed when `git remote -v show` is run.
 
 
-** remoteBranch **
+**remoteBranch**
 
 Type: `String`
 
