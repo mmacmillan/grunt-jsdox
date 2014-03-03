@@ -172,6 +172,35 @@ The name of the branch that we are publishing to, within the `remoteName` reposi
 
 
 
+## Usage Examples
+
+#### Documentation generation
+Here's a basic example of generating documentation for all the code in a project.  This would produce a tables of contents called
+readme.md, and a folder called `lib` containing the documentation (and any subfolders):
+
+**GruntFile**
+
+```js
+jsdox: {
+  generate: {
+    options: {
+      contentsTitle: 'My Project API Documentation',
+    },
+
+    src: ['lib/**/*.js'],
+    dest: 'docs/markdown'
+  }
+}
+```
+
+**Run the task**
+
+```shell
+grunt jsdox:generate
+```
+
+
+
 
 
 
