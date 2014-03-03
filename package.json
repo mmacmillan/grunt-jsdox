@@ -1,11 +1,11 @@
 {
   "name": "grunt-jsdox",
-  "description": "Recursively generates markdown files for your project, using the jsDox parser.  Optionally generates a table of contents, and can upload to a remote git repo",
+  "description": "Recursively generates markdown files for your project, using the jsDox parser.  Optionally generates a table of contents, and supports git",
   "version": "0.1.0",
   "homepage": "https://github.com/mmacmillan/grunt-jsdox",
   "author": {
     "name": "Mike MacMillan",
-    "email": "mike@tangentbase.com"
+    "email": "mikejmacmillan@gmail.com"
   },
   "repository": {
     "type": "git",
