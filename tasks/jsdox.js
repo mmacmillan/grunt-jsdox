@@ -135,7 +135,7 @@ module.exports = function(grunt) {
             var buf = [],
                 w = function() { buf.push.apply(buf, arguments) };
 
-            w(options.contentsTitle || 'Documentation', '===\n');
+            w(options.contentsTitle || 'Documentation', '===', '- - -');
 
             folders.forEach(function(folder) {
                 var docs = [];
@@ -151,9 +151,10 @@ module.exports = function(grunt) {
 
                 if(docs.length > 0) {
                     w(folder.name || 'Root', '---');
-                    w(' |', '-|');
+                    w('&nbsp;|', '-|');
 
                     docs.forEach(function(p) {  w('['+ p +'.js]('+ p +') |') });
+                    w('- - -');
                 }
 
                 w('\n');
