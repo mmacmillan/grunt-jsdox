@@ -114,7 +114,8 @@ module.exports = function(grunt) {
                 return {
                     name: file.folder,
                     path: file.path.replace(file.filename, ''),
-                    files: group
+                    files: group,
+                    fileData: {}
                 }
             })
             .each(function(folder) {
@@ -126,6 +127,7 @@ module.exports = function(grunt) {
 
                 //generate the docs for the folder, resolving the promise when complete
                 jsdox.generateForDir(folder.path, dest +'/'+ folder.name, def.resolve);
+                //jsdox.generateForDir(folder.path, dest +'/'+ folder.name, def.resolve, function(file, data) { folder.fileData[file] = data }); //soon...
             });
 
         //when all docs have been generated, build the table of contents, if needed (this stuff should be moved into a template)
@@ -135,7 +137,7 @@ module.exports = function(grunt) {
             var buf = [],
                 w = function() { buf.push.apply(buf, arguments) };
 
-            w(options.contentsTitle || 'Documentation', '===', '- - -');
+            w(options.contentsTitle || 'Documentation', '===');
 
             folders.forEach(function(folder) {
                 var docs = [];
@@ -143,17 +145,19 @@ module.exports = function(grunt) {
                 //derive the set of documents we *actually* generated docs for; that way we only add documented
                 //code to the table of contents
                 folder.files.forEach(function(file) {
-                    var p = path.join(file.folder, file.filename.replace('.js', '')).replace(/^\//, '');
+                    //reset the path, pointing to the markdown file, and set the file data parsed by jsdox
+                    file.path = path.join(file.folder, file.filename.replace('.js', '')).replace(/^\//, '');
+                    file.data = folder.fileData[file.filename]||{};
 
-                    if(grunt.file.exists(dest, p +'.md'))
-                        docs.push(p);
-                })
+                    if(grunt.file.exists(dest, file.path +'.md'))
+                        docs.push(file);
+                });
 
                 if(docs.length > 0) {
                     w(folder.name || 'Root', '---');
-                    w('&nbsp;|', '-|');
+                    w('name | overview', ':-- | :--');
 
-                    docs.forEach(function(p) {  w('['+ p +'.js]('+ p +') |') });
+                    docs.forEach(function(file) {  w('['+ file.path +'.js]('+ file.path +') | '+ (file.data.overview?'_'+ file.data.overview +'_':'')) });
                     w('- - -');
                 }
 
