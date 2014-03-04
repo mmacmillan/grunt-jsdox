@@ -209,8 +209,16 @@ the following order:
 2. git commit -m <commit message>
 3. git push <remote> <branch>
 
-This example assumes your github/bitbucket/whatever wiki is located in a docs/markdown subfolder.  If a remote isn't configured already
-(run `git remote -v show` to see whats there), you need to configure one before continuing:
+This example assumes your github/bitbucket/whatever wiki is located in a docs/markdown subfolder.  In a real-world situation, your nested
+documentation folder _may also_ be a git repo, so running git commands against it require targetting that repo directly (otherwise git will target
+the parent repo).  For example, running a simple ``git add .`` against a nested repo looks like:
+
+```shell
+git --git-dir=docs/markdown/.git --work-tree=docs/markdown add .
+```
+
+``grunt-jsdox`` makes this assumption by default, so --git-dir and --work-tree are automatically set to ``dest`` when running the ``publish``
+task.  Next, if a remote isn't configured already (run `git remote -v show` to see whats there), you need to configure one before continuing:
 
 ```shell
 git remote add <name> <git repo url>
