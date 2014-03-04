@@ -126,8 +126,9 @@ module.exports = function(grunt) {
                 grunt.file.mkdir(dest +'/'+ folder.name);
 
                 //generate the docs for the folder, resolving the promise when complete
-                jsdox.generateForDir(folder.path, dest +'/'+ folder.name, def.resolve);
-                //jsdox.generateForDir(folder.path, dest +'/'+ folder.name, def.resolve, function(file, data) { folder.fileData[file] = data }); //soon...
+                jsdox.generateForDir(folder.path, dest +'/'+ folder.name, def.resolve, function(file, fileData) {
+                    folder.fileData[file] = fileData;
+                });
             });
 
         //when all docs have been generated, build the table of contents, if needed (this stuff should be moved into a template)
