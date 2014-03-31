@@ -27,12 +27,14 @@
     "test": "grunt test"
   },
   "dependencies": {
-    "jsdox": ">=0.2.5"
+    "jsdox": ">=0.2.5",
+    "lodash": "^2.4.1",
+    "q": "^1.0.1"
   },
   "devDependencies": {
     "grunt": "0.4.x",
-    "grunt-contrib-jshint": "~0.6.0",
     "grunt-contrib-clean": "~0.4.0",
+    "grunt-contrib-jshint": "~0.6.0",
     "grunt-contrib-nodeunit": "~0.2.0"
   },
   "peerDependencies": {
