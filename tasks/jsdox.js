@@ -57,7 +57,7 @@ module.exports = function(grunt) {
             var def = Q.defer();
             grunt.util.spawn({ cmd: 'git', args: args }, def.resolve);
             return def.promise;
-        };
+        }
 
         //add, commit, and publish the doc repository
         cmd(data.addCmd)
@@ -102,13 +102,13 @@ module.exports = function(grunt) {
                     obj.folder = obj.folder.replace(options.pathFilter, '');
 
                 folders.push(obj);
-            })
+            });
         });
 
         //map the set of folders, sort, and generate documentation
         folders = _(folders)
-            .groupBy(function(p) { return p.folder })
-            .sortBy(function(p) { return p.length && p[0].folder })
+            .groupBy(function(p) { return p.folder; })
+            .sortBy(function(p) { return p.length && p[0].folder; })
             .map(function(group) {
                 var file = group.length && group[0] || {};
                 return {
@@ -116,7 +116,7 @@ module.exports = function(grunt) {
                     path: file.path.replace(file.filename, ''),
                     files: group,
                     fileData: {}
-                }
+                };
             })
             .each(function(folder) {
                 var def = Q.defer();
@@ -136,7 +136,7 @@ module.exports = function(grunt) {
             if(!options.contentsEnabled) return done();
 
             var buf = [],
-                w = function() { buf.push.apply(buf, arguments) };
+                w = function() { buf.push.apply(buf, arguments); };
 
             w(options.contentsTitle || 'Documentation', '===');
 
@@ -149,16 +149,15 @@ module.exports = function(grunt) {
                     //reset the path, pointing to the markdown file, and set the file data parsed by jsdox
                     file.path = path.join(file.folder, file.filename.replace('.js', '')).replace(/^\//, '');
                     file.data = folder.fileData[file.filename]||{};
-
-                    if(grunt.file.exists(dest, file.path +'.md'))
-                        docs.push(file);
+                    if(grunt.file.exists(dest, file.path + '.md')) docs.push(file);
                 });
 
                 if(docs.length > 0) {
                     w(folder.name || 'Root', '---');
                     w('name | overview', ':-- | :--');
-
-                    docs.forEach(function(file) {  w('['+ file.path +'.js]('+ file.path +') | '+ (file.data.overview?'_'+ file.data.overview +'_':'')) });
+                    docs.forEach(function(file) {
+                        w('['+ file.path +'.js]('+ file.path + '.md' + ') | '+ (file.data.overview?'_'+ file.data.overview +'_':''));
+                    });
                     w('- - -');
                 }
 
@@ -175,7 +174,7 @@ module.exports = function(grunt) {
         var target = this.target,
             data = this.data,
             done = this.async(),
-            handler = this.target == 'publish' ? publish : generate;
+            handler = this.target === 'publish' ? publish : generate;
 
         //we're either generating documents based on the passed in config; or we're publishing the docs repo...
         handler.call(this, target, data, done);
