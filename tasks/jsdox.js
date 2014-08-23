@@ -85,7 +85,8 @@ module.exports = function(grunt) {
         var options = this.options({
             contentsEnabled: true,
             contentsFile: 'readme.md',
-            contentsTitle: 'Documentation'
+            contentsTitle: 'Documentation',
+            templateDir: null
         });
 
         //map the list of files we'll be generating documentation for
@@ -126,7 +127,7 @@ module.exports = function(grunt) {
                 grunt.file.mkdir(dest +'/'+ folder.name);
 
                 //generate the docs for the folder, resolving the promise when complete
-                jsdox.generateForDir(folder.path, dest +'/'+ folder.name, def.resolve, function(file, fileData) {
+                jsdox.generateForDir(folder.path, dest +'/'+ folder.name, options.templateDir, def.resolve, function(file, fileData) {
                     folder.fileData[file] = fileData;
                 });
             });

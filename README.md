@@ -40,7 +40,8 @@ grunt.initConfig({
         contentsEnabled: true,
         contentsTitle: 'Example Documentation',
         contentsFile: 'readme.md',
-        pathFilter: /^example/
+        pathFilter: /^example/,
+        templateDir: 'path/to/my/mustache'
       },
 
       src: ['path/to/code'],
@@ -115,6 +116,12 @@ If defined, will filter the final path for each file generated.  Ex, if the `src
 is defined, then the path to moduleA in the table of contents will be `code/moduleA`.  This helps avoid unnecessary deep paths, if the
 code being documented is buried.
 
+**templateDir**
+
+Type: `String`
+
+The directory containing your custom mustache templates to override JSDox's default styles. See JSDox's [`templates/` directory](https://github.com/sutoiku/jsdox/tree/master/templates)
+for the list of mustache templates you can override.
 
 **src**
 
